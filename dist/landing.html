@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <title>SnackIt</title>
+</head>
+
+<body>
+    <nav class="flex justify-between w-full h-auto p-4 border-b border-[#d8d8d8] items-center bg-[#f5f5f5]">
+        <div class="flex items-center justify-center">
+            <img class="w-7 h-7 cursor-pointer" src="./images/nav logo.png" alt="SnackIt Logo">
+            <p class="font-bold text-2xl ml-1 cursor-pointer">SnackIt</p>
+        </div>
+        <div class="flex flex-row">
+            <p class="mx-2 font-medium text-slate-800 cursor-pointer"><i class="fas fa-search"></i> Search</p>
+            <p class="mx-2 font-medium text-slate-800 cursor-pointer">Login</p>
+        </div>
+    </nav>
+
+    <main class="flex-1">
+
+        <!-- Top Starts -->
+        <div
+            class="flex flex-col items-center gap-6 lg:gap-12 justify-around lg:flex-row w-full px-4 md:px-6 py-8 md:py-16 bg-[#f5f5f5]">
+            <div>
+                <div class="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl text-[#333]">
+                    Delicious Meals Delivered to Your Door
+                </div>
+                <div class="max-w-[600px] text-[#666] md:text-xl mt-1">
+                    Crave it, Snack it: SnackIt offers a wide selection of delicious meals, delivered fast and fresh to
+                    your doorstep. Enjoy your favorite dishes without the hassle.
+                </div>
+                <div class="flex flex-col gap-3 min-[400px]:flex-row mt-3">
+                    <button
+                        class="h-10 rounded-md bg-[#4CAF50] px-8 text-sm font-medium text-white shadow-sm transition-colors hover:bg-[#43a047]">Order
+                        Now
+                    </button>
+                    <button
+                        class="h-10 rounded-md border border-[#e5e5e5] bg-white px-8 text-sm font-medium shadow-sm transition-colors hover:bg-[#f5f5f5] hover:text-[#333]">Learn
+                        More</button>
+                </div>
+            </div>
+            <div>
+                <img class="mx-auto lg:max-w-2xl aspect-[16/9] overflow-hidden rounded-xl object-cover"
+                    src="./images/top1.jpg" alt="Delicious Meals">
+            </div>
+        </div>
+        <!-- Top Ends -->
+
+        <!-- Banner Starts -->
+        <div
+            class="flex flex-col border border-[#d8d8d8] sm:flex-row justify-evenly w-full py-8 md:py-16 lg:py-24 bg-[#f5f5f5] px-4 md:px-6 gap-6 lg:gap-12">
+            <div class="flex flex-col items-center justify-center space-y-4 text-center">
+                <img class="bg-[#f5f5f5] h-16 w-16" src="./images/fast-delivery.png" alt="Fast Delivery">
+                <div class="space-y-2">
+                    <h3 class="text-2xl font-bold text-[#333]">Fast Delivery</h3>
+                    <p class="max-w-[300px] text-[#666] md:text-lg">
+                        Get your meals delivered in 30 minutes or less, guaranteed.
+                    </p>
+                </div>
+            </div>
+
+            <div class="flex flex-col items-center justify-center space-y-4 text-center">
+                <img class="bg-[#f5f5f5] h-16 w-16" src="./images/options.png" alt="Wide Selection">
+                <div class="space-y-2">
+                    <h3 class="text-2xl font-bold text-[#333]">Wide Selection</h3>
+                    <p class="max-w-[300px] text-[#666] md:text-lg">
+                        Choose from a variety of delicious meals, catering to all dietary needs.
+                    </p>
+                </div>
+            </div>
+
+            <div class="flex flex-col items-center justify-center space-y-4 text-center">
+                <img class="bg-[#f5f5f5] h-16 w-16" src="./images/save-money.png" alt="Affordable Prices">
+                <div class="space-y-2">
+                    <h3 class="text-2xl font-bold text-[#333]">Affordable Prices</h3>
+                    <p class="max-w-[300px] text-[#666] md:text-lg">
+                        Enjoy high-quality meals at prices that won't break the bank.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <!-- Banner Ends -->
+
+        <!-- Reviews Starts -->
+        <div class="w-full px-4 md:px-6 lg:px-40 py-8 md:py-16 bg-[#f5f5f5]">
+            <div class="flex flex-col items-center gap-6 lg:gap-12 justify-center lg:flex-row">
+                <div>
+                    <div class="inline-block rounded-lg bg-[#e5e5e5] px-3 py-1 text-sm">Testimonials</div>
+                    <h2 class="text-3xl font-bold tracking-tighter sm:text-5xl text-[#333] mt-1 mb-4">
+                        What Our Customers Say
+                    </h2>
+                    <div class="rounded-lg border bg-white p-6 shadow-sm my-4">
+                        <p>"SnackIt has been a game-changer for my busy lifestyle. The food is always fresh and
+                            delicious, and the delivery is lightning-fast. Highly recommended!"</p>
+                        <div class="flex items-center gap-2 mt-2">
+                            <img class="rounded-full h-12 w-12" src="./images/user1.jpg" alt="Sarah Johnson">
+                            <div>
+                                <p class="font-medium text-[#333]">Sarah Johnson</p>
+                                <p class="text-xs text-[#4a4a4a]">Marketing Manager</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rounded-lg border bg-white p-6 shadow-sm my-4">
+                        <p>"I've tried several food delivery services, but SnackIt stands out with their incredible
+                            selection and affordable prices. The food is always fresh and delicious."</p>
+                        <div class="flex items-center gap-2 mt-2">
+                            <img class="rounded-full h-12 w-12" src="./images/user2.jpg" alt="Michael Brown">
+                            <div>
+                                <p class="font-medium text-[#333]">Michael Brown</p>
+                                <p class="text-xs text-[#4a4a4a]">Software Engineer</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <img class="mx-auto lg:max-w-xl aspect-square overflow-hidden rounded-xl object-cover"
+                        src="./images/review1.jpg" alt="Customer Reviews">
+                </div>
+            </div>
+        </div>
+        <!-- Reviews Ends -->
+
+    </main>
+
+    <footer
+        class="flex flex-col md:flex-row md:justify-between w-full h-auto p-4 border border-[#d8d8d8] items-center bg-[#f5f5f5]">
+        <div class="sm:flex sm:items-center">
+            <div class="flex items-center justify-center">
+                <img class="w-7 h-7 " src="./images/nav logo.png" alt="SnackIt Logo">
+                <p class="text-xl ml-2 font-bold text-[#333]">SnackIt</p>
+            </div>
+            <div class="sm:ml-2 text-xs text-[#666]">
+                © 2024 SnackIt. All rights reserved.
+            </div>
+        </div>
+        <div class="sm:ml-auto flex flex-row gap-2 items-center text-xs text-[#666]">
+            <p class="mx-2 cursor-pointer hover:underline hover:text-[#333]">Terms Of Service</p>
+            <p class="mx-2 cursor-pointer hover:underline hover:text-[#333]">Privacy Policy</p>
+            <p class="mx-2 cursor-pointer hover:underline hover:text-[#333]">Contact Us</p>
+            <i class="fa-brands fa-twitter cursor-pointer hover:text-[#333]"></i>
+            <i class="fa-brands fa-instagram cursor-pointer hover:text-[#333]"></i>
+            <i class="fa-brands fa-facebook cursor-pointer hover:text-[#333]"></i>
+        </div>
+    </footer>
+
+</body>
+
+</html>
