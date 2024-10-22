@@ -10,7 +10,8 @@
     <link rel="stylesheet" href="style.css">
 </head>
 
-<body class="flex flex-col min-h-screen text-[#23004D] font-sans">
+<body class="bg-fixed flex flex-col min-h-screen text-[#4CAF50] font-sans ]"
+    style="background-image: url(./images/loginBack.jpg); background-size: cover; ">
     <!-- Header -->
     <nav class="flex justify-between w-full h-auto p-4 border-b border-[#d8d8d8] items-center bg-[#f5f5f5]">
         <div class="flex items-center">
@@ -23,63 +24,65 @@
         </div>
     </nav>
 
-    <main class="flex justify-center items-center flex-grow">
+    <main class=" flex justify-center items-center flex-grow ">
         <!-- Sign In Form -->
-        <form action="" class="bg-gray-100 p-8 rounded-lg shadow-md" id="login-in">
+        <form action="" class="bg-gray-100 hidden p-14 rounded-lg shadow-md transition-opacity duration-150 ease-in-out"
+            id="login-in">
             <h1 class="text-2xl font-bold mb-8 text-center">Sign In</h1>
 
             <div class="flex items-center bg-white p-4 rounded-lg mb-4">
-                <i class="fas fa-user text-[#9D4BFF] text-2xl"></i>
+                <i class="fas fa-user text-[#4CAF50] text-2xl"></i>
                 <input type="text" placeholder="Username"
-                    class="ml-4 flex-grow border-none outline-none text-lg text-[#23004D] font-semibold">
+                    class="ml-4 flex-grow border-none outline-none text-lg text-[#4CAF50] font-semibold">
             </div>
 
             <div class="flex items-center bg-white p-4 rounded-lg mb-4">
-                <i class="fas fa-lock text-[#9D4BFF] text-2xl"></i>
+                <i class="fas fa-lock text-[#4CAF50] text-2xl"></i>
                 <input type="password" placeholder="Password"
-                    class="ml-4 flex-grow border-none outline-none text-lg text-[#23004D] font-semibold">
+                    class="ml-4 flex-grow border-none outline-none text-lg text-[#4CAF50] font-semibold">
             </div>
 
             <a href="#" class="block text-right text-sm font-semibold text-[#A49EAC]">Forgot password?</a>
 
             <button
-                class="w-full bg-[#9D4BFF] text-white py-3 rounded-lg font-semibold text-lg mt-6 hover:bg-[#23004D] transition duration-300">Sign
+                class="w-full bg-[#4CAF50] text-white py-3 rounded-lg font-semibold text-lg mt-6 hover:bg-[#388E3C] transition duration-150">Sign
                 In</button>
 
             <div class="text-center mt-6">
-                <span class="text-sm font-medium text-[#23004D]">Don't have an Account?</span>
+                <span class="text-sm font-medium text-[#4CAF50]">Don't have an Account?</span>
                 <span class="text-sm font-medium text-[#9D4BFF] cursor-pointer" id="sign-up">Sign Up</span>
             </div>
         </form>
 
         <!-- Sign Up Form -->
-        <form action="" class="hidden bg-gray-100 p-8 rounded-lg shadow-lg" id="login-up">
+        <form action="" class=" bg-gray-100 p-14 rounded-lg shadow-lg transition-opacity duration-150 ease-in-out"
+            id="login-up">
             <h1 class="text-2xl font-bold mb-8 text-center">Create Account</h1>
 
             <div class="flex items-center bg-white p-4 rounded-lg mb-4">
-                <i class="fas fa-user text-[#9D4BFF] text-2xl"></i>
+                <i class="fas fa-user text-[#4CAF50] text-2xl"></i>
                 <input type="text" placeholder="Username"
-                    class="ml-4 flex-grow border-none outline-none text-lg text-[#23004D] font-semibold">
+                    class="ml-4 flex-grow border-none outline-none text-lg text-[#4CAF50] font-semibold">
             </div>
 
             <div class="flex items-center bg-white p-4 rounded-lg mb-4">
-                <i class="fas fa-envelope text-[#9D4BFF] text-2xl"></i>
+                <i class="fas fa-envelope text-[#4CAF50] text-2xl"></i>
                 <input type="text" placeholder="Email"
-                    class="ml-4 flex-grow border-none outline-none text-lg text-[#23004D] font-semibold">
+                    class="ml-4 flex-grow border-none outline-none text-lg text-[#4CAF50] font-semibold">
             </div>
 
             <div class="flex items-center bg-white p-4 rounded-lg mb-4">
-                <i class="fas fa-lock text-[#9D4BFF] text-2xl"></i>
+                <i class="fas fa-lock text-[#4CAF50] text-2xl"></i>
                 <input type="password" placeholder="Password"
-                    class="ml-4 flex-grow border-none outline-none text-lg text-[#23004D] font-semibold">
+                    class="ml-4 flex-grow border-none outline-none text-lg text-[#4CAF50] font-semibold">
             </div>
 
             <button
-                class="w-full bg-[#9D4BFF] text-white py-3 rounded-lg font-semibold text-lg mt-6 hover:bg-[#23004D] transition duration-300">Sign
+                class="w-full bg-[#4CAF50] text-white py-3 rounded-lg font-semibold text-lg mt-6 hover:bg-[#388E3C] transition duration-150">Sign
                 Up</button>
 
             <div class="text-center mt-6">
-                <span class="text-sm font-medium text-[#23004D]">Already have an Account?</span>
+                <span class="text-sm font-medium text-[#4CAF50]">Already have an Account?</span>
                 <span class="text-sm font-medium text-[#9D4BFF] cursor-pointer" id="sign-in">Sign In</span>
             </div>
         </form>
@@ -108,13 +111,21 @@
         const loginUp = document.getElementById('login-up');
 
         signUpButton.addEventListener('click', () => {
-            loginIn.classList.add('hidden');
-            loginUp.classList.remove('hidden');
+            loginIn.classList.add('opacity-0');
+            setTimeout(() => {
+                loginIn.classList.add('hidden');
+                loginUp.classList.remove('hidden');
+                loginUp.classList.remove('opacity-0');
+            }, 150); // Reduced time for a faster transition
         });
 
         signInButton.addEventListener('click', () => {
-            loginUp.classList.add('hidden');
-            loginIn.classList.remove('hidden');
+            loginUp.classList.add('opacity-0');
+            setTimeout(() => {
+                loginUp.classList.add('hidden');
+                loginIn.classList.remove('hidden');
+                loginIn.classList.remove('opacity-0');
+            }, 150); // Reduced time for a faster transition
         });
     </script>
 </body>
