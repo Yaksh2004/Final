@@ -63,7 +63,7 @@
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700">Price</label>
-                            <input type="number" required step="0.01"
+                            <input type="number" required step="10"
                                 class="mt-1 p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500" />
                         </div>
                     </div>
@@ -128,7 +128,7 @@
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Price</label>
-                        <input type="number" required step="0.01" class="mt-1 p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                        <input type="number" required step="10" class="mt-1 p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500" />
                     </div>
                 </div>
                 <div class="mb-2">
@@ -148,35 +148,6 @@
             newMenuItem.querySelector('button[type="button"]').addEventListener('click', () => {
                 menuItemsContainer.removeChild(newMenuItem);
             });
-        });
-
-        document.getElementById('restaurantForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-
-            const restaurantName = document.getElementById('restaurantName').value;
-            const foodCategory = document.getElementById('foodCategory').value;
-            const address = document.getElementById('address').value;
-            const menuItems = Array.from(document.querySelectorAll('#menuItemsContainer > div')).map((menuItem) => {
-                const itemName = menuItem.querySelector('input[type="text"]').value;
-                const itemPrice = menuItem.querySelector('input[type="number"]').value;
-                const itemDescription = menuItem.querySelector('textarea').value;
-                const itemCategory = menuItem.querySelector('input[type="text"][placeholder="e.g., Appetizer, Main Course"]').value;
-
-                return {
-                    name: itemName,
-                    description: itemDescription,
-                    price: itemPrice,
-                    category: itemCategory,
-                };
-            });
-
-            console.log({
-                restaurantName,
-                foodCategory,
-                address,
-                menuItems,
-            });
-            // Here you would typically send this data to your backend
         });
     </script>
 </body>
