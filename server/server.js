@@ -121,6 +121,36 @@ app.get('/snackit', authenticateJWT, (req, res) => {
     res.render('snackit', { user: req.user }); 
 });
 
+// Add this route to handle restaurant listing form submissions
+app.get('/listing', authenticateJWT, (req, res) => {
+    res.render('listing', { user: req.user });
+});
+
+app.post('/listing', async (req, res) => {
+    const { restaurantName, restaurantimage, foodCategory, address, menuItems } = req.body;
+
+    // Validate menuItems format if necessary, ensuring it's a JSON string, etc.
+    try {
+        // Prepare the restaurant data
+        const newRestaurant = new Restaurant({
+            name: restaurantName,
+            category: foodCategory.split(',').map((cat) => cat.trim()), // Split and trim categories
+            rating: 0, // You can initialize with a default value or calculate it
+            phone: null, // Set a default value or handle it in the form
+            image: restaurantimage,
+            address: address,
+            menu: JSON.parse(menuItems) // Parse menuItems JSON
+        });
+
+        // Save to the database
+        await newRestaurant.save();
+
+        res.redirect('/restaurants');
+    } catch (error) {
+        console.error('Error listing restaurant:', error);
+        res.status(500).json({ message: 'Failed to list restaurant', error: error.message });
+    }
+});
 
 app.get('/restaurants', authenticateJWT, async (req, res) => {
     try {
@@ -282,7 +312,7 @@ app.post('/checkout', authenticateJWT, async (req, res) => {
 
 
 
-const PORT = 5000;
+const PORT = 3000;
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
