@@ -127,7 +127,7 @@ app.get('/listing', authenticateJWT, (req, res) => {
 });
 
 app.post('/listing', async (req, res) => {
-    const { restaurantName, restaurantimage, foodCategory, address, menuItems } = req.body;
+    const { restaurantName,phone, restaurantimage, foodCategory, address, menuItems } = req.body;
 
     // Validate menuItems format if necessary, ensuring it's a JSON string, etc.
     try {
@@ -135,8 +135,8 @@ app.post('/listing', async (req, res) => {
         const newRestaurant = new Restaurant({
             name: restaurantName,
             category: foodCategory.split(',').map((cat) => cat.trim()), // Split and trim categories
-            rating: 0, // You can initialize with a default value or calculate it
-            phone: null, // Set a default value or handle it in the form
+            rating: 5, // You can initialize with a default value or calculate it
+            phone: phone, // Set a default value or handle it in the form
             image: restaurantimage,
             address: address,
             menu: JSON.parse(menuItems) // Parse menuItems JSON

@@ -25,10 +25,17 @@
     <div class="max-w-3xl mx-auto bg-white rounded-lg shadow-lg p-8 mt-6 mb-6">
         <h1 class="text-4xl font-bold mb-6 text-center text-gray-800">List Your Restaurant</h1>
         <form id="restaurantForm" class="space-y-6" method="POST" action="/listing">
-            <div>
-                <label for="restaurantName" class="block text-sm font-medium text-gray-700">Restaurant Name</label>
-                <input id="restaurantName" name="restaurantName" type="text" required
-                    class="mt-1 p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label for="restaurantName" class="block text-sm font-medium text-gray-700">Restaurant Name</label>
+                    <input id="restaurantName" name="restaurantName" type="text" required
+                        class="mt-1 p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                </div>
+                <div>
+                    <label for="phone" class="block text-sm font-medium text-gray-700">Phone</label>
+                    <input id="phone" name="phone" type="number" required
+                        class="mt-1 p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                </div>
             </div>
             <div>
                 <label for="restaurantimage" class="block text-sm font-medium text-gray-700">Restaurant Image
