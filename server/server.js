@@ -8,7 +8,6 @@ const {User, Restaurant} = require('./db/index');
 const jwt = require('jsonwebtoken');
 const SECRET_KEY = 'Yaksh@Snackit';
 const cookieParser = require('cookie-parser');
-const { console } = require('inspector');
 
 app.use(cookieParser());
 app.set('view engine', 'ejs');
@@ -40,7 +39,7 @@ app.post('/signin', userMiddleware, async (req, res) => {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production'
         });
-
+0
         // Redirect to the snackit page
         return res.redirect('/snackit');  
     } catch (error) {
