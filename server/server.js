@@ -26,21 +26,11 @@ app.post('/signin', userMiddleware, async (req, res) => {
 
     try {
         const user = await User.findOne({ email });
-        if (!user) {
-            return res.status(400).json({ message: 'User  not found' });
-        }
-        if (user.password !== password) {
-            return res.status(400).json({ message: 'Incorrect password' });
-        }
 
         const token = jwt.sign({ userId: user._id, email: user.email }, SECRET_KEY);
 
-        res.cookie('token', token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production'
-        });
-0
-        // Redirect to the snackit page
+        res.cookie('token', token);
+
         return res.redirect('/snackit');  
     } catch (error) {
         res.status(500).json({ message: 'Internal Server Error' });
@@ -60,7 +50,6 @@ app.post('/signup', async(req, res)=>{
         if(!userFind){
             const user = new User({email: email, password: password, name: username});
             await user.save();
-            console.log("user created")
             res.redirect('/signin');
     } else {
         console.log("User Already Exists");
@@ -73,54 +62,10 @@ app.post('/signup', async(req, res)=>{
     }
 })
 
-app.post('/update-user', authenticateJWT, async (req, res) => {
-    try {
-        const { name, email, phone, address, password, confirm_password } = req.body;
-
-        // Get the current user from the JWT (using the authenticateJWT middleware)
-        const userId = req.user.userId;
-        if (!userId) {
-            return res.status(401).json({ message: 'User not authenticated' });
-        }
-
-        const user = await User.findById(userId);
-        if (!user) {
-            return res.status(404).json({ message: 'User not found' });
-        }
-
-        // Check if password fields match
-        if (password && password !== confirm_password) {
-            return res.status(400).json({ message: 'Passwords do not match' });
-        }
-
-        // If password is provided, update the password (without hashing)
-        if (password) {
-            user.password = password;
-        }
-
-        // Update the user details
-        user.name = name || user.name;
-        user.email = email || user.email;
-        user.phone = phone || user.phone;
-        user.address = address || user.address;
-
-        // Save the updated user
-        await user.save();
-
-        res.redirect('/user?success=true');
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Error updating user details' });
-    }
-});
-
-
-
 app.get('/snackit', authenticateJWT, (req, res) => {
     res.render('snackit', { user: req.user }); 
 });
 
-// Add this route to handle restaurant listing form submissions
 app.get('/listing', authenticateJWT, (req, res) => {
     res.render('listing', { user: req.user });
 });
@@ -128,20 +73,17 @@ app.get('/listing', authenticateJWT, (req, res) => {
 app.post('/listing', async (req, res) => {
     const { restaurantName,phone, restaurantimage, foodCategory, address, menuItems } = req.body;
 
-    // Validate menuItems format if necessary, ensuring it's a JSON string, etc.
     try {
-        // Prepare the restaurant data
         const newRestaurant = new Restaurant({
             name: restaurantName,
-            category: foodCategory.split(',').map((cat) => cat.trim()), // Split and trim categories
-            rating: 5, // You can initialize with a default value or calculate it
-            phone: phone, // Set a default value or handle it in the form
+            category: foodCategory.split(',').map((cat) => cat.trim()), 
+            rating: 5, 
+            phone: phone, 
             image: restaurantimage,
             address: address,
-            menu: JSON.parse(menuItems) // Parse menuItems JSON
+            menu: JSON.parse(menuItems)
         });
 
-        // Save to the database
         await newRestaurant.save();
 
         res.redirect('/restaurants');
@@ -180,7 +122,7 @@ app.get('/user', authenticateJWT, async (req, res) => {
 
         res.render('user', {
             user: user,
-            success: req.query.success || null  // Pass success query parameter to EJS
+            success: req.query.success || null  
         });
     } catch (error) {
         console.error('Error fetching user account:', error);
@@ -188,10 +130,39 @@ app.get('/user', authenticateJWT, async (req, res) => {
     }
 });
 
+app.post('/update-user', authenticateJWT, async (req, res) => {
+    try {
+        const { name, email, phone, address, password, confirm_password } = req.body;
+        const userId = req.user.userId;
+        const user = await User.findById(userId);
+
+        if (password && password !== confirm_password) {
+            return res.status(400).json({ message: 'Passwords do not match' });
+        }
+
+        if (password) {
+            user.password = password;
+        }
+
+        user.name = name || user.name;
+        user.email = email || user.email;
+        user.phone = phone || user.phone;
+        user.address = address || user.address;
+
+        await user.save();
+
+        res.redirect('/user?success=true');
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error updating user details' });
+    }
+});
+
+
 app.get('/menu', authenticateJWT, async (req, res) => {
     try {
         const restaurantName = req.query.restaurantName;
-        const searchQuery = req.query.menu_search || '';  // Adjusted based on template variable
+        const searchQuery = req.query.menu_search || '';  
         const categoryFilter = req.query.category || '';
 
         const filters = {};
@@ -207,29 +178,24 @@ app.get('/menu', authenticateJWT, async (req, res) => {
             filters['menu.item_category'] = categoryFilter;
         }
 
-        // Find the restaurant with the specified name
         const restaurant = await Restaurant.findOne({ name: restaurantName });
         
         if (!restaurant) {
             return res.status(404).send('Restaurant not found');
         }
 
-        // Ensure menu is an array before filtering
         if (!Array.isArray(restaurant.menu)) {
             return res.status(500).send('Menu data is corrupted');
         }
 
-        // Apply the filters to the restaurant's menu
         const filteredMenu = restaurant.menu.filter(item => {
             let matches = true;
 
-            // Search query filter
             if (searchQuery) {
                 matches = item.item_name.match(new RegExp(searchQuery, 'i')) || 
                           item.item_description.match(new RegExp(searchQuery, 'i'));
             }
 
-            // Category filter
             if (categoryFilter) {
                 matches = matches && item.item_category === categoryFilter;
             }
@@ -237,12 +203,11 @@ app.get('/menu', authenticateJWT, async (req, res) => {
             return matches;
         });
 
-        // Render the menu page with the filtered data
         res.render('menu', { 
             restaurant, 
-            searchQuery,       // Pass search query to the view
-            categoryFilter,    // Pass selected category filter to the view
-            filteredMenu       // Send the filtered menu to the template
+            searchQuery,       
+            categoryFilter,    
+            filteredMenu      
         });
 
     } catch (error) {
@@ -258,7 +223,6 @@ app.get('/cart', authenticateJWT, async (req, res) => {
             return res.status(404).send('User not found');
         }
 
-        // Pass the user data to the cart view
         res.render('cart', { user });
     } catch (error) {
         console.error('Error fetching user for cart:', error);
@@ -269,11 +233,10 @@ app.get('/cart', authenticateJWT, async (req, res) => {
 
 
 app.get('/logout', (req, res) => {
-    res.clearCookie('token'); // Clear the token cookie
-    res.redirect('/signin'); // Redirect to sign-in page
+    res.clearCookie('token'); 
+    res.redirect('/signin'); 
 });
 
-// Add a route to handle the checkout
 app.post('/checkout', authenticateJWT, async (req, res) => {
     try {
         const userId = req.user.userId;

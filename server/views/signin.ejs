@@ -75,15 +75,13 @@
     </footer>
 
     <script>
-        // JavaScript to handle form submission
         const form = document.getElementById('signin-form');
         form.addEventListener('submit', async (event) => {
-            event.preventDefault(); // Prevent the default form submission
+            event.preventDefault();
 
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
 
-            // Send credentials to the server
             try {
                 const response = await fetch('/signin', {
                     method: 'POST',
@@ -94,11 +92,10 @@
                 });
 
                 if (response.ok) {
-                    // If login is successful, the server will set the cookie and redirect
-                    window.location.href = '/snackit';  // Redirect after successful login
+                    window.location.href = '/snackit';
                 } else {
                     const errorData = await response.json();
-                    alert(errorData.message); // Show error message if login fails
+                    alert(errorData.message);
                 }
             } catch (error) {
                 console.error('Error during sign-in:', error);

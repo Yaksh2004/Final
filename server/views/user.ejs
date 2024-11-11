@@ -29,14 +29,12 @@
         <div class="max-w-4xl w-full bg-white shadow-md rounded-lg p-6">
             <h1 class="text-2xl font-bold mb-4 text-center">User Account</h1>
 
-            <!-- Success Alert -->
             <% if (success==='true' ) { %>
                 <div class="bg-green-500 text-white p-4 rounded mb-4">
                     <strong>Success!</strong> Your account details have been updated.
                 </div>
                 <% } %>
 
-                    <!-- Personal Information Section -->
                     <form id="userForm" method="POST" action="/update-user">
                         <h2 class="text-xl font-semibold mb-4 text-center">Personal Information</h2>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
@@ -78,7 +76,6 @@
                             </div>
                         </div>
 
-                        <!-- Save Button -->
                         <div class="flex justify-end gap-4">
                             <button type="button" onclick="window.location.href='/logout'"
                                 class="bg-red-500 text-white px-6 py-2 rounded hover:bg-red-600 transition-colors">Log
@@ -142,15 +139,13 @@
     </footer>
 
 
-    <!-- JavaScript for Form Validation -->
     <script>
         document.getElementById('userForm').addEventListener('submit', function (e) {
             const password = document.querySelector('[name="password"]').value;
             const confirmPassword = document.querySelector('[name="confirm_password"]').value;
 
-            // If password is set, make sure both password and confirm password match
             if (password && password !== confirmPassword) {
-                e.preventDefault(); // Prevent form submission
+                e.preventDefault();
                 alert("Passwords do not match!");
             }
         });
