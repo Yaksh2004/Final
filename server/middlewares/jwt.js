@@ -5,7 +5,6 @@ const authenticateJWT = (req, res, next) => {
     const token = req.cookies.token; // Get the token from cookies
 
     if (!token) {
-        console.log("No token Found");
         return res.redirect('/signin'); // Redirect if there's no token.
     }
 
