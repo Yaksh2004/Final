@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Account</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
+</head>
+
+<body class="bg-gray-100">
+    <nav class="flex justify-between w-full h-auto p-4 border-b border-[#d8d8d8] items-center bg-[#f5f5f5]">
+        <div class="flex items-center justify-center">
+            <img class="w-7 h-7 cursor-pointer" src="./images/nav logo.png" alt="SnackIt Logo">
+            <p class="font-bold text-2xl ml-1 cursor-pointer">SnackIt</p>
+        </div>
+        <div class="flex flex-row items-center">
+            <i onclick="window.location.href='/snackit'" class="fas fa-home mx-2 cursor-pointer"></i>
+            <p onclick="window.location.href='/cart'" class="ml-4 mr-2 font-medium text-slate-800 cursor-pointer">
+                <i class="fas fa-shopping-cart"></i>
+            </p>
+        </div>
+    </nav>
+
+    <main class="flex flex-col items-center justify-center min-h-screen p-4">
+        <div class="max-w-4xl w-full bg-white shadow-md rounded-lg p-6">
+            <h1 class="text-2xl font-bold mb-4 text-center">User Account</h1>
+
+            <!-- Success Alert -->
+            <% if (success==='true' ) { %>
+                <div class="bg-green-500 text-white p-4 rounded mb-4">
+                    <strong>Success!</strong> Your account details have been updated.
+                </div>
+                <% } %>
+
+                    <!-- Personal Information Section -->
+                    <form id="userForm" method="POST" action="/update-user">
+                        <h2 class="text-xl font-semibold mb-4 text-center">Personal Information</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Name</label>
+                                <input type="text" name="name" value="<%= user.name %>"
+                                    class="bg-gray-100 p-2 rounded w-full" required>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Email</label>
+                                <input type="email" name="email" value="<%= user.email %>"
+                                    class="bg-gray-100 p-2 rounded w-full" required>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Phone Number</label>
+                                <input type="text" name="phone" value="<%= user.phone %>"
+                                    class="bg-gray-100 p-2 rounded w-full" required>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Address</label>
+                                <input type="text" name="address" value="<%= user.address %>"
+                                    class="bg-gray-100 p-2 rounded w-full" required>
+                            </div>
+
+                            <!-- Password Section -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Password</label>
+                                <input type="password" name="password" placeholder="Enter a new password"
+                                    class="bg-gray-100 p-2 rounded w-full">
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Confirm Password</label>
+                                <input type="password" name="confirm_password" placeholder="Confirm your new password"
+                                    class="bg-gray-100 p-2 rounded w-full">
+                            </div>
+                        </div>
+
+                        <!-- Save Button -->
+                        <div class="flex justify-end gap-4">
+                            <button type="button" onclick="window.location.href='/logout'"
+                                class="bg-red-500 text-white px-6 py-2 rounded hover:bg-red-600 transition-colors">Log
+                                Out</button>
+                            <button type="submit"
+                                class="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600 transition-colors">Save
+                                Changes</button>
+                        </div>
+                    </form>
+
+                    <hr class="my-6">
+
+                    <!-- Past Orders Section -->
+                    <h2 class="text-xl font-semibold mb-4 text-center">Past Orders</h2>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-white">
+                            <thead>
+                                <tr>
+                                    <th class="py-2 px-4 border-b text-left">Order ID</th>
+                                    <th class="py-2 px-4 border-b text-left">Date</th>
+                                    <th class="py-2 px-4 border-b text-left">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% user.past_orders.forEach(order=> { %>
+                                    <tr>
+                                        <td class="py-2 px-4 border-b">
+                                            <%= order.order_id %>
+                                        </td>
+                                        <td class="py-2 px-4 border-b">
+                                            <%= order.order_date.toLocaleDateString() %>
+                                        </td>
+                                        <td class="py-2 px-4 border-b">Rs.<%= order.amount.toFixed(2) %>
+                                        </td>
+                                    </tr>
+                                    <% }) %>
+                            </tbody>
+                        </table>
+                    </div>
+        </div>
+    </main>
+
+
+    <footer
+        class="flex flex-col md:flex-row md:justify-between w-full h-auto p-4 border border-[#d8d8d8] items-center bg-[#f5f5f5]">
+        <div class="sm:flex sm:items-center">
+            <div class="flex items-center">
+                <img src="./images/nav logo.png" alt="SnackIt Logo" class="w-7 h-7">
+                <p class="text-xl ml-2 font-bold text-[#333]">SnackIt</p>
+            </div>
+            <div class="sm:ml-2 text-xs text-[#666]">© 2024 SnackIt. All rights reserved.</div>
+        </div>
+        <div class="sm:ml-auto flex gap-2 items-center text-xs text-[#666]">
+            <a href="#" class="cursor-pointer hover:underline hover:text-[#333]">Terms Of Service</a>
+            <a href="#" class="cursor-pointer hover:underline hover:text-[#333]">Privacy Policy</a>
+            <a href="#" class="cursor-pointer hover:underline hover:text-[#333]">Contact Us</a>
+            <i class="fa-brands fa-twitter cursor-pointer hover:text-[#333]"></i>
+            <i class="fa-brands fa-instagram cursor-pointer hover:text-[#333]"></i>
+            <i class="fa-brands fa-facebook cursor-pointer hover:text-[#333]"></i>
+        </div>
+    </footer>
+
+
+    <!-- JavaScript for Form Validation -->
+    <script>
+        document.getElementById('userForm').addEventListener('submit', function (e) {
+            const password = document.querySelector('[name="password"]').value;
+            const confirmPassword = document.querySelector('[name="confirm_password"]').value;
+
+            // If password is set, make sure both password and confirm password match
+            if (password && password !== confirmPassword) {
+                e.preventDefault(); // Prevent form submission
+                alert("Passwords do not match!");
+            }
+        });
+    </script>
+
+</body>
+
+</html>

@@ -1,9 +1,10 @@
-/** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./dist/*.{html,js}"],
+  content: [
+    './server/views/*.ejs',  // Ensure your views are scanned for Tailwind classes
+    './server/public/*.html'
+  ],
   theme: {
     extend: {},
   },
   plugins: [],
 }
-

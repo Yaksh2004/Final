@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <title>Order</title>
+</head>
+
+<body>
+    <nav class="flex justify-between w-full h-auto p-4 border-b border-[#d8d8d8] items-center bg-[#f5f5f5]">
+        <div class="flex items-center justify-center">
+            <img class="w-7 h-7 cursor-pointer" src="./images/nav logo.png" alt="SnackIt Logo">
+            <p class="font-bold text-2xl ml-1 cursor-pointer">SnackIt</p>
+        </div>
+        <div class="flex flex-row items-center">
+            <i onclick="window.location.href='/snackit'" class=" fas fa-home mx-2 cursor-pointer"></i>
+            <p onclick="window.location.href='/user'" class="ml-4 mr-2 font-medium text-slate-800 cursor-pointer ">
+                <i class="fas fa-user"></i>
+            </p>
+        </div>
+    </nav>
+
+
+
+
+    <!-- Top Starts Here -->
+
+    <div class="w-full px-4 md:px-6 py-5 sm:py-12 bg-[#f5f5f5] border-b border-[#d8d8d8]">
+        <div class="text-2xl font-bold tracking-tighter sm:text-4xl xl:text-5xl text-[#333] pb-4">
+            Available Restaurants:
+        </div>
+        <div class="flex flex-wrap gap-4">
+            <div>
+                <form action="/restaurants" method="get">
+                    <input
+                        class="h-7 rounded-md border border-[#e5e5e5] bg-white px-3 text-sm font-medium shadow-sm transition-colors hover:bg-[#f5f5f5] hover:text-[#333]"
+                        type="text" name="search" id="search" placeholder="Search..." value="<%= search %>">
+                    <i class="fas fa-search "></i>
+                </form>
+            </div>
+            <button type="button"
+                class="h-7 rounded-md border border-[#e5e5e5] bg-white px-3 text-sm font-medium shadow-sm transition-colors-transform duration-100 hover:scale-110 hover:bg-[#f5f5f5] hover:text-[#333]"
+                onclick="window.location.href='/restaurants'">All</button>
+
+            <button type="button"
+                class="h-7 rounded-md border border-[#e5e5e5] bg-white px-3 text-sm font-medium shadow-sm transition-colors-transform duration-100 hover:scale-110 hover:bg-[#f5f5f5] hover:text-[#333]"
+                onclick="window.location.href='/restaurants?category=Burger'">Burger</button>
+
+            <button type="button"
+                class="h-7 rounded-md border border-[#e5e5e5] bg-white px-3 text-sm font-medium shadow-sm transition-colors-transform duration-100 hover:scale-110 hover:bg-[#f5f5f5] hover:text-[#333]"
+                onclick="window.location.href='/restaurants?category=Pizza'">Pizza</button>
+
+            <button type="button"
+                class="h-7 rounded-md border border-[#e5e5e5] bg-white px-3 text-sm font-medium shadow-sm transition-colors-transform duration-100 hover:scale-110 hover:bg-[#f5f5f5] hover:text-[#333]"
+                onclick="window.location.href='/restaurants?category=Chinese'">Chinese</button>
+
+            <button type="button"
+                class="h-7 rounded-md border border-[#e5e5e5] bg-white px-3 text-sm font-medium shadow-sm transition-colors-transform duration-100 hover:scale-110 hover:bg-[#f5f5f5] hover:text-[#333]"
+                onclick="window.location.href='/restaurants?category=Momos'">Momos</button>
+
+            <button type="button"
+                class="h-7 rounded-md border border-[#e5e5e5] bg-white px-3 text-sm font-medium shadow-sm transition-colors-transform duration-100 hover:scale-110 hover:bg-[#f5f5f5] hover:text-[#333]"
+                onclick="window.location.href='/restaurants?category=Biryani'">Biryani</button>
+
+            <button type="button"
+                class="h-7 rounded-md border border-[#e5e5e5] bg-white px-3 text-sm font-medium shadow-sm transition-colors-transform duration-100 hover:scale-110 hover:bg-[#f5f5f5] hover:text-[#333]"
+                onclick="window.location.href='/restaurants?category=Mexican'">Mexican</button>
+
+            <button type="button"
+                class="h-7 rounded-md border border-[#e5e5e5] bg-white px-3 text-sm font-medium shadow-sm transition-colors-transform duration-100 hover:scale-110 hover:bg-[#f5f5f5] hover:text-[#333]"
+                onclick="window.location.href='/restaurants?category=Fries'">Fries</button>
+
+            <button type="button"
+                class="h-7 rounded-md border border-[#e5e5e5] bg-white px-3 text-sm font-medium shadow-sm transition-colors-transform duration-100 hover:scale-110 hover:bg-[#f5f5f5] hover:text-[#333]"
+                onclick="window.location.href='/restaurants?category=Salads'">Salads</button>
+
+            <button type="button"
+                class="h-7 rounded-md border border-[#e5e5e5] bg-white px-3 text-sm font-medium shadow-sm transition-colors-transform duration-100 hover:scale-110 hover:bg-[#f5f5f5] hover:text-[#333]"
+                onclick="window.location.href='/restaurants?category=Sandwich'">Sandwich</button>
+        </div>
+    </div>
+    <!-- Top Ends Here -->
+
+    <!-- Catalogue Starts Here -->
+    <div class="min-h-screen bg-[#f5f5f5]">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-8 py-8 bg-[#f5f5f5]">
+            <% restaurants.forEach(restaurant=> { %>
+                <div
+                    class="rounded-lg border cursor-pointer shadow-lg transition-transform duration-200 md:hover:scale-105">
+                    <img src="<%= restaurant.image %>" alt="<%= restaurant.name %>"
+                        class="w-full h-48 object-cover rounded-t-xl">
+                    <div class="p-4">
+                        <h3 class="text-lg font-bold mb-2">
+                            <%= restaurant.name %>
+                        </h3>
+                        <p class="mb-2">
+                            <%= restaurant.category.join(", ") %> <!-- Assuming category is an array -->
+                        </p>
+                        <div class=" flex items-center gap-2 mb-2">
+                                <i class="rating-icon fa-regular fa-star"></i>
+                                <span class="font-bold">
+                                    <%= restaurant.rating %>
+                                </span>
+                    </div>
+                    <button type="button"
+                        class="h-8 rounded-md bg-[#4CAF50] px-5 text-sm font-medium text-white shadow-sm transition-colors hover:bg-[#43a047] mt-1"
+                        onclick="window.location.href='/menu?restaurantName=<%= restaurant.name %>'">
+                        Order Now
+                    </button>
+
+                </div>
+        </div>
+        <% }) %>
+    </div>
+    </div>
+
+
+    <!-- Catalogue Ends Here -->
+
+    <footer
+        class="flex flex-col md:flex-row md:justify-between w-full h-auto p-4 border border-[#d8d8d8] items-center bg-[#f5f5f5]">
+        <div class="sm:flex sm:items-center">
+            <div class="flex items-center justify-center">
+                <img class="w-7 h-7 " src="./images/nav logo.png" alt="o">
+                <p class="text-xl ml-2 font-bold text-[#333]">SnackIt</p>
+            </div>
+            <div class="sm:ml-2 text-xs text-[#666]">
+                © 2024 SnackIt. All rights reserved.
+            </div>
+        </div>
+        <div class="sm:ml-auto flex flex-row gap-2 items-center text-xs text-[#666]">
+            <p class="mx-2 cursor-pointer hover:underline hover:text-[#333]">Terms Of Service</p>
+            <p class="mx-2 cursor-pointer hover:underline hover:text-[#333]">Privacy Policy</p>
+            <p class="mx-2 cursor-pointer hover:underline hover:text-[#333]">Contact Us</p>
+            <i class="fa-brands fa-twitter cursor-pointer hover:text-[#333]"></i>
+            <i class="fa-brands fa-instagram cursor-pointer hover:text-[#333]"></i>
+            <i class="fa-brands fa-facebook cursor-pointer hover:text-[#333]"></i>
+        </div>
+    </footer>
+
+    <script>
+        document.querySelectorAll('.rating-icon').forEach(function (icon) {
+            icon.addEventListener('click', function () {
+                this.classList.toggle('fa-regular');
+                this.classList.toggle('fa-solid');
+            });
+        });
+    </script>
+
+</body>
+
+
+
+</html>

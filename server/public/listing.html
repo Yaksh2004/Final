@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Listing Form</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+</head>
+
+<body class="min-h-screen bg-gray-200">
+    <!-- Header -->
+    <nav class="flex justify-between w-full h-auto p-4 border-b border-[#d8d8d8] items-center bg-[#f5f5f5]">
+        <div class="flex items-center justify-center">
+            <img class="w-7 h-7 cursor-pointer" src="./images/nav logo.png" alt="logo">
+            <p class="font-bold text-2xl ml-1 cursor-pointer">SnackIt</p>
+        </div>
+        <div class="flex flex-row items-center">
+            <p class="mx-2 font-medium text-slate-800 cursor-pointer"><i class="fas fa-home"></i> Home</p>
+            <p class="mx-2 font-medium text-slate-800 cursor-pointer">Login</p>
+        </div>
+    </nav>
+
+    <div class="max-w-3xl mx-auto bg-white rounded-lg shadow-lg p-8 mt-6 mb-6">
+        <h1 class="text-4xl font-bold mb-6 text-center text-gray-800">List Your Restaurant</h1>
+        <form id="restaurantForm" class="space-y-6">
+            <div>
+                <label for="restaurantName" class="block text-sm font-medium text-gray-700">Restaurant Name</label>
+                <input id="restaurantName" type="text" required
+                    class="mt-1 p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            </div>
+            <div>
+                <label for="foodCategory" class="block text-sm font-medium text-gray-700">Food Category</label>
+                <select id="foodCategory" required
+                    class="mt-1 p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <option value="" disabled selected>Select a category</option>
+                    <option value="Italian">Italian</option>
+                    <option value="Chinese">Chinese</option>
+                    <option value="Mexican">Mexican</option>
+                    <option value="Indian">Indian</option>
+                    <option value="Japanese">Japanese</option>
+                    <option value="American">American</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            <div>
+                <label for="address" class="block text-sm font-medium text-gray-700">Address</label>
+                <textarea id="address" required
+                    class="mt-1 p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    rows="4"></textarea>
+            </div>
+
+            <div id="menuItemsContainer">
+                <h2 class="text-2xl font-semibold mb-2 text-gray-800">Menu Items</h2>
+                <div class="bg-gray-50 p-4 rounded-lg mb-4 shadow">
+                    <div class="grid grid-cols-2 gap-4 mb-2">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Item Name</label>
+                            <input type="text" required
+                                class="mt-1 p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Price</label>
+                            <input type="number" required step="10"
+                                class="mt-1 p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        <label class="block text-sm font-medium text-gray- 700">Description</label>
+                        <textarea required
+                            class="mt-1 p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                    </div>
+                    <div class="mb-2">
+                        <label class="block text-sm font-medium text-gray-700">Category</label>
+                        <input type="text" required placeholder="e.g., Appetizer, Main Course"
+                            class="mt-1 p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                    </div>
+                </div>
+            </div>
+
+            <button type="button" id="addMenuItemBtn"
+                class="mt-2 p-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-200">Add
+                Menu Item</button>
+
+            <div class="mt-6">
+                <button type="submit"
+                    class="w-full p-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition duration-200">Submit
+                    Restaurant Listing</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Footer -->
+    <footer
+        class="flex flex-col md:flex-row md:justify-between w-full h-auto p-4 border border-[#d8d8d8] items-center bg-[#f5f5f5]">
+        <div class="sm:flex sm:items-center">
+            <div class="flex items-center justify-center">
+                <img class="w-7 h-7 " src="./images/nav logo.png" alt="logo">
+                <p class="text-xl ml-2 font-bold text-[#333]">SnackIt</p>
+            </div>
+            <div class="sm:ml-2 text-xs text-[#666]">
+                © 2024 SnackIt. All rights reserved.
+            </div>
+        </div>
+        <div class="sm:ml-auto flex flex-row gap-2 items-center text-xs text-[#666]">
+            <p class="mx-2 cursor-pointer hover:underline hover:text-[#333]">Terms Of Service</p>
+            <p class="mx-2 cursor-pointer hover:underline hover:text -[#333]">Privacy Policy</p>
+            <p class="mx-2 cursor-pointer hover:underline hover:text-[#333]">Contact Us</p>
+            <i class="fa-brands fa-twitter cursor-pointer hover:text-[#333]"></i>
+            <i class="fa-brands fa-instagram cursor-pointer hover:text-[#333]"></i>
+            <i class="fa-brands fa-facebook cursor-pointer hover:text-[#333]"></i>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('addMenuItemBtn').addEventListener('click', () => {
+            const menuItemsContainer = document.getElementById('menuItemsContainer');
+
+            const newMenuItem = document.createElement('div');
+            newMenuItem.className = 'bg-gray-50 p-4 rounded-lg mb-4 shadow';
+            newMenuItem.innerHTML = `
+                <div class="grid grid-cols-2 gap-4 mb-2">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Item Name</label>
+                        <input type="text" required class="mt-1 p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Price</label>
+                        <input type="number" required step="10" class="mt-1 p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                    </div>
+                </div>
+                <div class="mb-2">
+                    <label class="block text-sm font-medium text-gray-700">Description</label>
+                    <textarea required class="mt-1 p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                </div>
+                <div class="mb-2">
+                    <label class="block text-sm font-medium text-gray-700">Category</label>
+                    <input type="text" required placeholder="e.g., Appetizer, Main Course" class="mt-1 p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                </div>
+                <button type="button" class="mt-2 p-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition duration-200">Remove Item</button>
+            `;
+
+            menuItemsContainer.appendChild(newMenuItem);
+
+            newMenuItem.querySelector('button[type="button"]').addEventListener('click', () => {
+                menuItemsContainer.removeChild(newMenuItem);
+            });
+        });
+    </script>
+</body>
+
+</html>

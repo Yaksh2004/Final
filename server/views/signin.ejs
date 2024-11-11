@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body class="bg-fixed flex flex-col min-h-screen font-sans ]"
+    style="background-image: url(./images/loginBack.jpg); background-size: cover; ">
+
+    <!-- Header -->
+    <nav class="flex justify-between w-full h-auto p-4 border-b border-[#d8d8d8] items-center bg-[#f5f5f5]">
+        <div class="flex items-center">
+            <img class="w-7 h-7 cursor-pointer" src="./images/nav logo.png" alt="logo">
+            <p class="font-bold text-2xl ml-1 cursor-pointer">SnackIt</p>
+        </div>
+        <div class="flex items-center">
+            <i class="fa fa-user"></i>
+            <p onclick="window.location.href='/signup'" class="mx-2 font-medium text-slate-800 cursor-pointer">Register
+            </p>
+        </div>
+    </nav>
+
+    <main class=" flex justify-center items-center flex-grow ">
+        <!-- Sign In Form -->
+        <form id="signin-form"
+            class="bg-gray-100 p-14 rounded-lg shadow-md transition-opacity duration-150 ease-in-out">
+            <h1 class="text-2xl font-bold mb-8 text-center">Sign In</h1>
+
+            <div class="flex items-center bg-white p-4 rounded-lg mb-4">
+                <i class="fas fa-envelope text-2xl"></i>
+                <input type="text" placeholder="Email" id="email" name="email"
+                    class="ml-4 flex-grow border-none outline-none text-lg font-semibold">
+            </div>
+
+            <div class="flex items-center bg-white p-4 rounded-lg mb-4">
+                <i class="fas fa-lock text-2xl"></i>
+                <input type="password" placeholder="Password" id="password" name="password"
+                    class="ml-4 flex-grow border-none outline-none text-lg font-semibold">
+            </div>
+
+            <a href="#" class="block text-right text-sm font-semibold text-[#A49EAC]">Forgot password?</a>
+
+            <button type="submit"
+                class="w-full bg-[#4CAF50] text-white py-3 rounded-lg font-semibold text-lg mt-6 hover:bg-[#388E3C] transition duration-150">Sign
+                In</button>
+
+            <div class="text-center mt-6">
+                <span class="text-sm font-medium ">Don't have an Account?</span>
+                <span onclick="window.location.href='/signup'" class="text-sm font-medium text-[#3a30f5] cursor-pointer"
+                    id="sign-up">Sign Up</span>
+            </div>
+        </form>
+    </main>
+
+    <!-- Footer -->
+    <footer
+        class="flex flex-col md:flex-row justify-between w-full h-auto p-4 border border-[#d8d8d8] items-center bg-[#f5f5f5]">
+        <div class="sm:flex sm:items-center">
+            <div class="flex items-center justify-center">
+                <img class="w-7 h-7" src="./images/nav logo.png" alt="logo">
+                <p class="text-xl ml-2 font-bold text-[#333]">SnackIt</p>
+            </div>
+            <div class="sm:ml-2 text-xs text-[#666]">© 2024 SnackIt. All rights reserved.</div>
+        </div>
+        <div class="sm:ml-auto flex flex-row gap-2 items-center text-xs text-[#666]">
+            <p class="mx-2 cursor-pointer hover:underline hover:text-[#333]">Terms Of Service</p>
+            <p class="mx-2 cursor-pointer hover:underline hover:text-[#333]">Privacy Policy</p>
+        </div>
+    </footer>
+
+    <script>
+        // JavaScript to handle form submission
+        const form = document.getElementById('signin-form');
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault(); // Prevent the default form submission
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            // Send credentials to the server
+            try {
+                const response = await fetch('/signin', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email, password }),
+                });
+
+                if (response.ok) {
+                    // If login is successful, the server will set the cookie and redirect
+                    window.location.href = '/snackit';  // Redirect after successful login
+                } else {
+                    const errorData = await response.json();
+                    alert(errorData.message); // Show error message if login fails
+                }
+            } catch (error) {
+                console.error('Error during sign-in:', error);
+                alert('Something went wrong. Please try again.');
+            }
+        });
+    </script>
+
+
+
+
+</body>
+
+</html>

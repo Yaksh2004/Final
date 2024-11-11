@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
+</head>
+
+<body class="bg-gray-100">
+    <nav class="flex justify-between w-full h-auto p-4 border-b border-[#d8d8d8] items-center bg-[#f5f5f5]">
+        <div class="flex items-center justify-center">
+            <img class="w-7 h-7 cursor-pointer" src="./images/nav logo.png" alt="SnackIt Logo">
+            <p class="font-bold text-2xl ml-1 cursor-pointer">SnackIt</p>
+        </div>
+        <div class="flex flex-row items-center">
+            <i onclick="window.location.href='/snackit'" class="fas fa-home mx-2 cursor-pointer"></i>
+            <p onclick="window.location.href='/user'" class="ml-4 mr-2 font-medium text-slate-800 cursor-pointer">
+                <i class="fas fa-user"></i>
+            </p>
+        </div>
+    </nav>
+
+    <div class="flex flex-col justify-center items-center min-h-screen bg-[#f5f5f5]">
+        <h1 class="text-3xl pt-5 font-bold text-left mb-6">YOUR CART</h1>
+        <div class="p-6 w-full max-w-2xl border border-[#d8d8d8] rounded-lg bg-white">
+            <h1 class="text-2xl mb-3 font-medium text-left">Cart Items</h1>
+            <div id="cartContent">
+                <!-- Cart items will be rendered here via JavaScript -->
+            </div>
+        </div>
+        <div class="p-6 w-full max-w-2xl border border-[#d8d8d8] rounded-lg bg-white mt-4">
+            <h1 class="text-2xl mb-3 font-medium text-left">Delivery Information</h1>
+            <div class="my-4">
+                <label for="phone" class="block text-sm font-medium text-gray-700">Phone Number</label>
+                <div class="flex items-center gap-2">
+                    <i class="fa fa-phone"></i>
+                    <input type="text" id="phone" class="mt-1 p-2 border rounded w-full"
+                        placeholder="Enter your phone number" value="<%= user.phone || '' %>">
+                </div>
+            </div>
+            <div class="my-4">
+                <label for="address" class="block text-sm font-medium text-gray-700">Delivery Address</label>
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <input type="text" id="address" class="mt-1 p-2 border rounded w-full"
+                        placeholder="Enter your address" value="<%= user.address || '' %>">
+                </div>
+            </div>
+        </div>
+        <div class="p-6 w-full max-w-2xl border border-[#d8d8d8] rounded-lg bg-white mt-4">
+            <h1 class="text-2xl mb-3 font-medium text-left">Order Summary</h1>
+            <div id="cartSummary">
+                <!-- Cart summary will be updated here -->
+            </div>
+        </div>
+
+        <footer
+            class="flex flex-col md:flex-row md:justify-between w-full h-auto p-4 border border-[#d8d8d8] items-center bg-[#f5f5f5]">
+            <div class="sm:flex sm:items-center">
+                <div class="flex items-center">
+                    <img src="./images/nav logo.png" alt="SnackIt Logo" class="w-7 h-7">
+                    <p class="text-xl ml-2 font-bold text-[#333]">SnackIt</p>
+                </div>
+                <div class="sm:ml-2 text-xs text-[#666]">© 2024 SnackIt. All rights reserved.</div>
+            </div>
+            <div class="sm:ml-auto flex gap-2 items-center text-xs text-[#666]">
+                <a href="#" class="cursor-pointer hover:underline hover:text-[#333]">Terms Of Service</a>
+                <a href="#" class="cursor-pointer hover:underline hover:text-[#333]">Privacy Policy</a>
+                <a href="#" class="cursor-pointer hover:underline hover:text-[#333]">Contact Us</a>
+                <i class="fa-brands fa-twitter cursor-pointer hover:text-[#333]"></i>
+                <i class="fa-brands fa-instagram cursor-pointer hover:text-[#333]"></i>
+                <i class="fa-brands fa-facebook cursor-pointer hover:text-[#333]"></i>
+            </div>
+        </footer>
+
+        <script>
+            function proceedToCheckout() {
+                const cart = JSON.parse(localStorage.getItem('cart')) || [];
+                const phone = document.getElementById('phone').value;
+                const address = document.getElementById('address').value;
+
+                if (!phone || !address) {
+                    alert('Please enter your phone number and address.');
+                    return;
+                }
+
+                const orderDetails = {
+                    cart,
+                    phone,
+                    address
+                };
+
+                fetch('/checkout', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(orderDetails)
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.message === 'Order placed successfully!') {
+                            localStorage.removeItem('cart');
+                            alert(data.message);
+                            window.location.href = '/snackit';
+                        } else {
+                            alert('Error processing order.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('There was an error processing your order.');
+                    });
+            }
+
+            // Step 1: Add an item to the cart (this is just an example, replace with actual data)
+            const addToCart = (item) => {
+                let cart = JSON.parse(localStorage.getItem('cart')) || []; // Get existing cart or create new
+
+                // Check if the item is already in the cart
+                const existingItemIndex = cart.findIndex(cartItem => cartItem._id === item._id);
+                if (existingItemIndex !== -1) {
+                    // If it exists, increase the quantity
+                    cart[existingItemIndex].quantity += 1;
+                } else {
+                    // Add new item to cart
+                    cart.push(item);
+                }
+
+                // Save updated cart to localStorage
+                localStorage.setItem('cart', JSON.stringify(cart));
+                renderCart(); // Re-render cart after update
+            };
+
+            // Step 2: Remove an item from the cart
+            const removeItem = (id) => {
+                let cart = JSON.parse(localStorage.getItem('cart')) || [];
+                cart = cart.filter(item => item._id !== id); // Remove item based on id
+                localStorage.setItem('cart', JSON.stringify(cart));
+                renderCart(); // Re-render the cart after removing an item
+            };
+
+            // Step 3: Update item quantity in the cart
+            const updateQuantity = (id, action) => {
+                let cart = JSON.parse(localStorage.getItem('cart')) || [];
+                const itemIndex = cart.findIndex(item => item._id === id);
+
+                if (itemIndex !== -1) {
+                    if (action === 'increase') {
+                        cart[itemIndex].quantity += 1; // Increase quantity
+                    } else if (action === 'decrease' && cart[itemIndex].quantity > 1) {
+                        cart[itemIndex].quantity -= 1; // Decrease quantity, but not below 1
+                    }
+                }
+
+                localStorage.setItem('cart', JSON.stringify(cart));
+                renderCart(); // Re-render the cart after update
+            };
+
+            // Step 4: Render Cart Items and Summary
+            const renderCart = () => {
+                const cart = JSON.parse(localStorage.getItem('cart')) || [];
+                const cartContent = document.getElementById('cartContent');
+                const cartSummary = document.getElementById('cartSummary');
+                cartContent.innerHTML = ''; // Clear existing cart items
+                cartSummary.innerHTML = ''; // Clear summary
+
+                // If cart is empty
+                if (cart.length === 0) {
+                    cartContent.innerHTML = '<p class="text-center text-gray-500">Your cart is empty.</p>';
+                    return;
+                }
+
+                let subtotal = 0;
+                cart.forEach(item => {
+                    subtotal += parseFloat(item.price) * item.quantity;  // Ensure price is a number
+                    cartContent.innerHTML += `
+                    <div class="bg-white p-4  mb-4 flex items-center space-x-4 ">
+                        <img src="${item.image}" alt="${item.name}" class="w-16 h-16 rounded-md">
+                        <div class="flex-1">
+                            <h3 class="font-semibold text-lg">${item.name}</h3>
+                            <p class="text-sm text-gray-500">₹${parseFloat(item.price).toFixed(2)}</p>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <!-- Quantity Controls -->
+                            <button class="px-2 border rounded-lg border-[#d8d8d8] text-gray-600 hover:text-gray-800" onclick="updateQuantity('${item._id}', 'decrease')">-</button>
+                            <span class="w-8 text-center">${item.quantity}</span>
+                            <button class="px-2 border rounded-lg border-[#d8d8d8] text-gray-600 hover:text-gray-800" onclick="updateQuantity('${item._id}', 'increase')">+</button>
+                        </div>
+                        <button class="p-2 text-red-500 hover:text-red-700" onclick="removeItem('${item._id}')"><i class="fa-regular fa-trash-can fa-bounce" style="color: #f90101;"></i></button>
+                    </div>
+                `;
+                });
+
+                // Step 5: Calculate and display the cart summary
+                const tax = subtotal * 0.1; // 10% tax
+                const deliveryFee = 50; // Fixed delivery fee
+                const total = subtotal + tax + deliveryFee;
+
+                cartSummary.innerHTML = `
+                <div class="bg-white p-1 rounded-lg mt-4">
+                    <div class="space-y-2">
+                        <div class="flex justify-between">
+                            <span>Subtotal</span>
+                            <span>₹${subtotal.toFixed(2)}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>Tax (10%)</span>
+                            <span>₹${tax.toFixed(2)}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>Delivery Fee</span>
+                            <span>₹${deliveryFee.toFixed(2)}</span>
+                        </div>
+                        <div class="flex border-t justify-between font-bold">
+                            <span>Total</span>
+                            <span>₹${total.toFixed(2)}</span>
+                        </div>
+                    </div>
+                    <button onclick="proceedToCheckout()" class="w-full bg-blue-500 text-white p-2 mt-4 rounded hover:bg-blue-600 transition-colors duration-200">Place Order</button>
+                </div>
+            `;
+            };
+
+            // Initialize the cart on page load
+            document.addEventListener('DOMContentLoaded', renderCart);
+        </script>
+</body>
+
+
+
+</html>
