@@ -101,8 +101,8 @@ app.get('/restaurants', authenticateJWT, async (req, res) => {
         const query = {};
         if (search) {
             query.name = { $regex: search, $options: 'i' };
-        } else if (category) {
-            query.category = { $in: category.split(',').map(c => c.trim()) };
+        } if (category) {
+            query.category = category;
         }
         const restaurants = await Restaurant.find(query);
 
@@ -136,9 +136,6 @@ app.post('/update-user', authenticateJWT, async (req, res) => {
         const userId = req.user.userId;
         const user = await User.findById(userId);
 
-        if (password && password !== confirm_password) {
-            return res.status(400).json({ message: 'Passwords do not match' });
-        }
 
         if (password) {
             user.password = password;
@@ -165,39 +162,21 @@ app.get('/menu', authenticateJWT, async (req, res) => {
         const searchQuery = req.query.menu_search || '';  
         const categoryFilter = req.query.category || '';
 
-        const filters = {};
-        
-        if (searchQuery) {
-            filters.$or = [
-                { 'menu.item_name': { $regex: searchQuery, $options: 'i' } },
-                { 'menu.item_description': { $regex: searchQuery, $options: 'i' } }
-            ];
-        }
-
-        if (categoryFilter) {
-            filters['menu.item_category'] = categoryFilter;
-        }
-
         const restaurant = await Restaurant.findOne({ name: restaurantName });
         
         if (!restaurant) {
             return res.status(404).send('Restaurant not found');
         }
 
-        if (!Array.isArray(restaurant.menu)) {
-            return res.status(500).send('Menu data is corrupted');
-        }
-
         const filteredMenu = restaurant.menu.filter(item => {
             let matches = true;
 
             if (searchQuery) {
-                matches = item.item_name.match(new RegExp(searchQuery, 'i')) || 
-                          item.item_description.match(new RegExp(searchQuery, 'i'));
+                matches = item.item_name.match(new RegExp(searchQuery, 'i')); 
             }
 
             if (categoryFilter) {
-                matches = matches && item.item_category === categoryFilter;
+                matches = item.item_category === categoryFilter;
             }
 
             return matches;
@@ -215,6 +194,7 @@ app.get('/menu', authenticateJWT, async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 });
+
 
 app.get('/cart', authenticateJWT, async (req, res) => {
     try {

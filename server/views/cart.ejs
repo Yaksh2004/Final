@@ -119,20 +119,6 @@
                     });
             }
 
-            const addToCart = (item) => {
-                let cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-                const existingItemIndex = cart.findIndex(cartItem => cartItem._id === item._id);
-                if (existingItemIndex !== -1) {
-                    cart[existingItemIndex].quantity += 1;
-                } else {
-                    cart.push(item);
-                }
-
-                localStorage.setItem('cart', JSON.stringify(cart));
-                renderCart();
-            };
-
             const removeItem = (id) => {
                 let cart = JSON.parse(localStorage.getItem('cart')) || [];
                 cart = cart.filter(item => item._id !== id);
@@ -176,7 +162,7 @@
                         <img src="${item.image}" alt="${item.name}" class="w-16 h-16 rounded-md">
                         <div class="flex-1">
                             <h3 class="font-semibold text-lg">${item.name}</h3>
-                            <p class="text-sm text-gray-500">₹${parseFloat(item.price).toFixed(2)}</p>
+                            <p class="text-sm text-gray-500">₹${parseFloat(item.price * item.quantity).toFixed(2)}</p>
                         </div>
                         <div class="flex items-center space-x-2">
                             <!-- Quantity Controls -->
@@ -189,7 +175,7 @@
                 `;
                 });
 
-                const tax = subtotal * 0.1;
+                const tax = subtotal * 0.08;
                 const deliveryFee = 50;
                 const total = subtotal + tax + deliveryFee;
 
@@ -201,7 +187,7 @@
                             <span>₹${subtotal.toFixed(2)}</span>
                         </div>
                         <div class="flex justify-between">
-                            <span>Tax (10%)</span>
+                            <span>Tax (8%)</span>
                             <span>₹${tax.toFixed(2)}</span>
                         </div>
                         <div class="flex justify-between">

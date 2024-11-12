@@ -103,8 +103,6 @@
                 class="mt-2 p-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-200">Add Menu
                 Item</button>
 
-            <!-- Hidden inputs for submitting categories and menu items as JSON -->
-            <input type="hidden" id="foodCategories" name="foodCategories" />
             <input type="hidden" id="menuItems" name="menuItems" />
 
             <div class="mt-6">
@@ -183,9 +181,6 @@
         document.getElementById('restaurantForm').addEventListener('submit', (e) => {
             e.preventDefault();
 
-            // Get unique food categories
-            const foodCategories = Array.from(new Set([...document.querySelectorAll('[name="foodCategory"]')].map((input) => input.value)));
-
             const menuItems = [];
 
             document.querySelectorAll('.menu-item').forEach((menuItem) => {
@@ -194,13 +189,11 @@
                     item_category: menuItem.querySelector('[name="itemCategory"]').value,
                     item_description: menuItem.querySelector('[name="itemDescription"]').value,
                     item_price: parseFloat(menuItem.querySelector('[name="itemPrice"]').value),
-                    item_image: menuItem.querySelector('[name="itemimage"]').value,
-                    isVeg: menuItem.querySelector('[name="itemName"]').value.toLowerCase().includes('veg') // Example check
+                    item_image: menuItem.querySelector('[name="itemimage"]').value
                 };
                 menuItems.push(item);
             });
 
-            document.getElementById('foodCategories').value = JSON.stringify(foodCategories);
             document.getElementById('menuItems').value = JSON.stringify(menuItems);
 
             // Submit the form

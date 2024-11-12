@@ -39,7 +39,6 @@ const restaurantSchema = new mongoose.Schema({
     menu: [{
         item_id: String,
         item_name: String,
-        isVeg: Boolean,
         item_category: String,
         item_price: Number,
         item_description: String,

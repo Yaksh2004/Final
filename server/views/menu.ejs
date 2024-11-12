@@ -97,7 +97,7 @@
             <% filteredMenu.forEach(item=> { %>
                 <div
                     class="flex items-center bg-white border border-gray-200 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-                    <!-- Item Details (Left) -->
+
                     <div class="flex-1 p-4 space-y-2">
                         <div class="text-xs text-gray-500 uppercase font-semibold tracking-widest">
                             <%= item.item_category %>
@@ -113,7 +113,6 @@
                         </div>
                     </div>
 
-                    <!-- Item Image and Order Button (Right) -->
                     <div class="flex flex-col items-center bg-gray-100 p-4">
                         <img src="<%= item.item_image %>" alt="<%= item.item_name %>"
                             class="h-36 w-36 object-cover rounded-md shadow-lg mb-4">
@@ -150,7 +149,6 @@
         </div>
     </footer>
 
-    <!-- Rating Toggle Script -->
     <script>
         document.querySelectorAll('.rating-icon').forEach(function (icon) {
             icon.addEventListener('click', function () {
@@ -159,7 +157,6 @@
             });
         });
 
-        // Add item to cart using localStorage
         function addToCart(id, name, price, image) {
             let cart = JSON.parse(localStorage.getItem('cart')) || [];
             const itemIndex = cart.findIndex(item => item._id === id);
@@ -176,19 +173,18 @@
             }
             localStorage.setItem('cart', JSON.stringify(cart));
 
-            // Show toast notification
             const toast = document.getElementById('toast');
-            toast.classList.remove('hidden'); // Make toast visible
-            toast.classList.add('opacity-100'); // Fade in
+            toast.classList.remove('hidden');
+            toast.classList.add('opacity-100');
             setTimeout(() => {
-                toast.classList.remove('opacity-100'); // Fade out
+                toast.classList.remove('opacity-100');
                 toast.classList.add('hidden');
-            }, 2000); // Toast will disappear after 2 seconds
+            }, 2000);
         }
     </script>
-    <!-- Toast Notification -->
+
     <div id="toast"
-        class="hidden fixed bottom-5 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-4 py-2 rounded-md shadow-md opacity-0 transition-all duration-300 ease-in-out">
+        class="hidden fixed bottom-5 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-4 py-2 rounded-md shadow-md opacity-0 transition-all duration-500 ease-in-out">
         Item added to cart!
     </div>
 
