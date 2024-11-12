@@ -102,7 +102,7 @@ app.get('/restaurants', authenticateJWT, async (req, res) => {
         if (search) {
             query.name = { $regex: search, $options: 'i' };
         } if (category) {
-            query.category = category;
+            query.category = {$regex: category, $options: 'i'};
         }
         const restaurants = await Restaurant.find(query);
 
