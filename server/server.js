@@ -230,13 +230,6 @@ app.get('/cart', authenticateJWT, async (req, res) => {
     }
 });
 
-
-
-app.get('/logout', (req, res) => {
-    res.clearCookie('token'); 
-    res.redirect('/signin'); 
-});
-
 app.post('/checkout', authenticateJWT, async (req, res) => {
     try {
         const userId = req.user.userId;
@@ -271,7 +264,10 @@ app.post('/checkout', authenticateJWT, async (req, res) => {
     }
 });
 
-
+app.get('/logout', (req, res) => {
+    res.clearCookie('token'); 
+    res.redirect('/signin'); 
+});
 
 
 const PORT = 3000;

@@ -4,7 +4,11 @@ module.exports = {
     './server/public/*.html'
   ],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: {
+        'listing': "url('./public/images/listingBack.jpg')"
+      }
+    },
   },
   plugins: [],
 }
