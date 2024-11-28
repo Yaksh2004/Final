@@ -15,6 +15,8 @@ app.use(bodyParser.json());
 app.use('/static',express.static(path.join(__dirname,'public')));
 app.use(express.static(path.join(__dirname,'public')));
 app.use(express.urlencoded({extended: true}));
+app.set('views', path.join(__dirname, 'views'));
+
 
 
 app.get('/signin', (req,res) => {
@@ -132,7 +134,7 @@ app.get('/user', authenticateJWT, async (req, res) => {
 
 app.post('/update-user', authenticateJWT, async (req, res) => {
     try {
-        const { name, email, phone, address, password, confirm_password } = req.body;
+        const { name, email, phone, address, password } = req.body;
         const userId = req.user.userId;
         const user = await User.findById(userId);
 
